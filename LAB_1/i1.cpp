@@ -13,7 +13,6 @@ int main(){
         for(int card = n; card >= 1; card--){
             deck.push_front(card);
             int k = card%deck.size();
-
             for(int j = 0; j < k; j++){
                 deck.push_front(deck.back());
                 deck.pop_back();
