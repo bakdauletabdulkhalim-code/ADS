@@ -10,7 +10,7 @@ int main() {
 
     map<string, string> curr;
 
-    for (int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++) {
         string oldName, newName;
         cin >> oldName >> newName;
 

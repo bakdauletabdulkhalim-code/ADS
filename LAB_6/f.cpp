@@ -1,49 +1,31 @@
 #include <bits/stdc++.h>
 using namespace std;
-struct S{
+struct Node{
     string l, f;
-    double gpa;
+    double g;
 };
-double ggpa(const string& grade){
-    if(grade == "A+"){
-        return 4.0;
-    }
-    if(grade == "A"){
-        return 3.75;
-    }
-    if(grade == "B+"){
-        return 3.5;
-    }
-    if(grade == "B"){
-        return 3.0;
-    }
-    if(grade == "C+"){
-        return 2.5;
-    }
-    if(grade == "C"){
-        return 2.0;
-    }
-    if(grade == "D+"){
-        return 1.5;
-    }
-    if(grade == "D"){
-        return 1.0;
-    }
-    if(grade == "F"){
-        return 0.0;
-    }
+double ggpa(const string& a){
+    if(a == "A+") return 4.0;
+    if(a == "A") return 3.75;
+    if(a == "B+") return 3.5;
+    if(a == "B") return 3.0;
+    if(a == "C+") return 2.5;
+    if(a == "C") return 2.0;
+    if(a == "D+") return 1.5;
+    if(a == "D") return 1.0;
+    if(a == "F") return 0.0;
     return 0.0;
 }
-bool les(const S& a, const S& b){
-    if(a.gpa != b.gpa){
-        return a.gpa < b.gpa;
+bool les(const Node& a,const Node& b){
+    if(a.g != b.g){
+        return a.g < b.g;
     }
     if(a.l != b.l){
-        return a.l < b.l;;
+        return a.l < b.l;
     }
-    return a.f < b.f;
+    return a.f <= b.f;
 }
-void heapify(vector<S>& a, int& n, int& i){
+void heapify(vector<Node>& a,int n, int i){
     int m = i;
     int l = 2 * i + 1;
     int r = 2 * i + 2;
@@ -58,12 +40,12 @@ void heapify(vector<S>& a, int& n, int& i){
         heapify(a, n, m);
     }
 }
-void heapsort(const vector<S>& a){
+void heapsort(vector<Node>& a){
     int n = a.size();
-    for(int i = n/2 - 1; i >= 0; i--){
+    for(int i = n/2-1; i >= 0; i--){
         heapify(a, n, i);
     }
-    for(int i = n - 1; i > 0; i--){
+    for(int i = n - 1; i >= 0; i--){
         swap(a[0], a[i]);
         heapify(a, i, 0);
     }
@@ -71,24 +53,23 @@ void heapsort(const vector<S>& a){
 int main(){
     int n;
     cin >> n;
-    vector<S> a(n);
+    vector<Node> a(n);
     for(int i = 0; i < n; i++){
         int k;
         cin >> a[i].l >> a[i].f >> k;
-        double tgrade = 0;
-        double tcredit = 0;
+        double tg = 0, tc = 0;
         for(int j = 0; j < k; j++){
-            string grade;
-            double credit;
-            cin >> grade >> credit;
-            tgrade *= ggpa(grade) * credit;
-            tcredit += credit;
+            string g;
+            int c;
+            cin >> g >> c;
+            tg += ggpa(g) * c;
+            tc += c;
         }
-        a[i].gpa = tgrade / tcredit;
+        a[i].gpa = tg/tc;
     }
     heapsort(a);
-    cout << fixed << 
-    for(int i = 0; i < n; i++){
-        cout << a[i].l << " " <<  a[i].f << " " << a[i].gpa << endl;
+    cout << fixed << setprecision(3);
+    for(int i = 0; i <n; i++){
+        cout << a[i].l << " " << a[i].f << " " << a[i].g << endl;
     }
 }
